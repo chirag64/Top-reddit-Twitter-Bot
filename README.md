@@ -5,7 +5,7 @@ This is a simple Twitter bot written in Node.js that tweets top reddit posts of 
 
 How to use
 -----------
-1. To use this bot, you need to make sure you have [node.js](https://nodejs.org/) installed on your system and all the required dependencies are installed on your system using npm.
+1. To use this bot, you need to make sure you have [node.js](https://nodejs.org/) installed on your system and all the required dependencies are installed on your system using [npm](https://www.npmjs.com/).
 2. Make sure you have a Twitter account created to use as a bot. You will need to enter the following values of your twitter account for the bot to be able to post to your account: `consumer_secret`, `consumer_key`, `access_token` & `access_token_secret`. These values need to be entered in the `topreddit.js` file. While creating these keys on your Twitter account, make sure you give this app `Read and Write` access to be able to post on the account.
 3. Make sure you update all the configurable variables in `topreddit.js` file according to your needs.
 4. `cd` into the directory where this project files are located and run `node topreddit.js` from your command line. You need to keep the script running for it to post at regular intervals. For regular use without access to a server, you might want to run this script from a cloud-based server like Amazon AWS or Red Hat's Openshift.
@@ -14,7 +14,8 @@ Dependencies
 ------------
 To use this bot, you need to install the following nodejs modules using npm:
 
-```npm install -g request
+```
+npm install -g request
 npm install -g node-twitterbot
 ```
 
