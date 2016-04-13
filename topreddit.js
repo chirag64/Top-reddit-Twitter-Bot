@@ -6,6 +6,7 @@ var request = require("request"),
 const POSTS_PER_INTERVAL = 2,
 	  	INTERVAL_MINUTES = 60,
 	  	MIN_SCORE = 2000,
+	  	MAX_TWEET_TEXT_COUNT = 116,
 	  	subreddits = ["worldnews","technology"];
 
 // Twitter Bot credentials
@@ -18,7 +19,7 @@ var Bot = new TwitterBot({
 		marker = [],
 		url = "https://www.reddit.com/r/" + subreddits.join("+") +"/top.json?t=day";
 	
-
+TopReddit();
 setInterval(TopReddit, (INTERVAL_MINUTES * 60 * 1000));
 
 // This function will be called during every interval
@@ -36,6 +37,9 @@ function TopReddit() {
 			if (marker[Today()] === undefined) {
 				marker[Today()] = [];
 			}
+			if (marker[Yesterday()] === undefined) {
+				marker[Yesterday()] = [];
+			}
 
 	    var posts = body.data.children;
 	    var current_interval_posts = 0;
@@ -47,12 +51,12 @@ function TopReddit() {
 	    	if (marker[Today()][posts[i].data.id] === undefined && marker[Yesterday()][posts[i].data.id] === undefined && posts[i].data.score > MIN_SCORE) {
 	    		marker[Today()][posts[i].data.id] = true;
 	    		current_interval_posts++;
-	    		var linkSuffix = " - http://redd.it/" + posts[i].data.id;
+	    		var linkSuffix = " http://redd.it/" + posts[i].data.id;
 	    		var title = posts[i].data.title;
 
 	    		// Trim the title if total tweet length exceeds 140 characters
-	    		if (title.length > (140 - linkSuffix.length)) {
-	    			title = title.substring(0, (140 - linkSuffix.length - 3)) + "...";
+	    		while (title.length > MAX_TWEET_TEXT_COUNT) {
+	    			title = title.substring(0, title.lastIndexOf(" ")) + "...";
 	    		}
 
 	    		// Post tweet
